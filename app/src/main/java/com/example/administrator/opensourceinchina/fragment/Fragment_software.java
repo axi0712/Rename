@@ -171,7 +171,7 @@ public class Fragment_software extends Fragment {
         private ArrayList<SoftWare> getList() {
             return mList;
         }
-
+        //天假只是
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             super.startElement(uri, localName, qName, attributes);
