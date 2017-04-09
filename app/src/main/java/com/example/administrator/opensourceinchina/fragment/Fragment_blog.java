@@ -52,7 +52,7 @@ public class Fragment_blog extends Fragment {
     private SharedPreferences.Editor mEditor;
     private ArrayList<SoftWare> mList = new ArrayList<>();
     private MyAdapter mAdapter;
-    private int pageIndex = 20;
+    private int pageIndex = 1;
     private Button mBtn;
     @Nullable
     @Override
@@ -66,7 +66,8 @@ public class Fragment_blog extends Fragment {
         mView = (PullToRefreshRecyclerView) v.findViewById(R.id.fra_soft_recyclerview);
         mShared = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         mEditor = mShared.edit();
-        pageIndex = mShared.getInt("Index", 1);
+//        pageIndex = mShared.getInt("Index", 1);
+        Log.i("","");
         if(Activity_Search_Tab.str!=null){
             getRetro("blog",Activity_Search_Tab.str, "3", "10");
         }

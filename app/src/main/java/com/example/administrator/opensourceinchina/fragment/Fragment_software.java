@@ -51,7 +51,7 @@ public class Fragment_software extends Fragment {
     private SharedPreferences.Editor mEditor;
     private ArrayList<SoftWare> mList = new ArrayList<>();
     private MyAdapter mAdapter;
-    private int pageIndex = 20;
+    private int pageIndex = 1;
 
     @Nullable
     @Override
@@ -66,14 +66,15 @@ public class Fragment_software extends Fragment {
         mView = (PullToRefreshRecyclerView) v.findViewById(R.id.fra_soft_recyclerview);
         mShared = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         mEditor = mShared.edit();
-        pageIndex = mShared.getInt("Index", 1);
+//        pageIndex = mShared.getInt("Index", 1);
+        Log.e("knakn",pageIndex+"");
         if(Activity_Search_Tab.str!=null){
-            getRetro("software",Activity_Search_Tab.str, String.valueOf(pageIndex), "10");
+            getRetro("software",Activity_Search_Tab.str,String.valueOf(pageIndex), "10");
         }
 
-        pageIndex++;
-        mEditor.putInt("Index", pageIndex);
-        mEditor.commit();
+//        pageIndex++;
+//        mEditor.putInt("Index", pageIndex);
+//        mEditor.commit();
         LinearLayoutManager layout = new LinearLayoutManager(getActivity().getApplicationContext());
         layout.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -90,12 +91,15 @@ public class Fragment_software extends Fragment {
                     public void run() {
                         mView.setRefreshComplete();
                         mList.clear();
-                        if (Activity_Search_Tab.str != null) {
-                            getRetro("software", Activity_Search_Tab.str, String.valueOf(pageIndex), "10");
+                        for(int i = 1;i<=pageIndex;i++){
+                            if (Activity_Search_Tab.str != null) {
+                                getRetro("software", Activity_Search_Tab.str, String.valueOf(i), "10");
+                            }
                         }
-                        pageIndex++;
-                        mEditor.putInt("Index",pageIndex);
-                        mEditor.commit();
+
+
+//                        mEditor.putInt("Index",pageIndex);
+//                        mEditor.commit();
                     }
                 }, 2000);
             }
@@ -105,11 +109,12 @@ public class Fragment_software extends Fragment {
                 mView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        pageIndex++;
                         mView.setLoadMoreComplete();
                         if (Activity_Search_Tab.str != null) {
-                            getRetro("software", Activity_Search_Tab.str, String.valueOf(pageIndex), "5");
+                            getRetro("software", Activity_Search_Tab.str, String.valueOf(pageIndex), "10");
                         }
-                        pageIndex++;
+
                         mEditor.putInt("Index",pageIndex);
                         mEditor.commit();
                     }
@@ -128,6 +133,7 @@ public class Fragment_software extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         String str = response.body().string();
+                        Log.e("Str",str+"");
                         StringReader reader = new StringReader(str);
                         InputSource is = new InputSource(reader);
                         SAXParserFactory sacF = SAXParserFactory.newInstance();
@@ -139,9 +145,11 @@ public class Fragment_software extends Fragment {
                         ArrayList<SoftWare> list = han.getList();
                         if (mList != null) {
                             mList.addAll(list);
-                            Log.i("success", mList.toString());
+                            Log.i("success", mList.toString()+"hheheda");
                             mAdapter = new MyAdapter(getActivity().getApplicationContext(), mList);
                             mView.setAdapter(mAdapter);
+
+                            Log.e("count",mAdapter.getItemCount()+"条");
                         }
 //                        if (mAdapter != null) {
 //                            mAdapter.notifyDataSetChanged();
