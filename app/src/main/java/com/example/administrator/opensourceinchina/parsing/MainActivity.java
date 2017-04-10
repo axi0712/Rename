@@ -9,12 +9,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.androidkun.PullToRefreshRecyclerView;
 import com.androidkun.adapter.BaseAdapter;
 import com.androidkun.adapter.ViewHolder;
 import com.androidkun.callback.PullToRefreshListener;
-import com.example.administrator.opensourceinchina.Activity_Search;
+import com.example.administrator.opensourceinchina.login.Activity_Login;
+import com.example.administrator.opensourceinchina.search.Activity_Search;
 import com.example.administrator.opensourceinchina.R;
 
 import org.xml.sax.InputSource;
@@ -44,22 +46,22 @@ public class MainActivity extends Activity {
    private SharedPreferences mShared;
     private SharedPreferences.Editor mEditor;
     private int pageIndex;
+    private TextView mLogin;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       mShared = getSharedPreferences("data",MODE_PRIVATE);
-        mEditor = mShared.edit();
-        pageIndex = mShared.getInt("Index",1);
-        getCon("1",String.valueOf(pageIndex),"10");
-        pageIndex++;
-        mEditor.putInt("Index",pageIndex);
-        mEditor.commit();
         mView = (PullToRefreshRecyclerView) findViewById(R.id.main_recyclerview);
+        mShared = getSharedPreferences("data",MODE_PRIVATE);
+        mEditor = mShared.edit();
+//        pageIndex = mShared.getInt("Index",1);
+        getCon("1",String.valueOf(pageIndex),"10");
+//        pageIndex++;
+//        mEditor.putInt("Index",pageIndex);
+//        mEditor.commit();
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        mAdapter = new MyAdapter(MainActivity.this, mList);
-        mView.setAdapter(mAdapter);
+
         mView.setLayoutManager(layoutManager);
         //是否开启下拉刷新功能
         mView.setPullRefreshEnabled(true);
@@ -77,10 +79,13 @@ public class MainActivity extends Activity {
                       mView.setRefreshComplete();
                         //模拟没有数据的情况
                         mList.clear();
-                        getCon("1",String.valueOf(pageIndex),"10");
-                        pageIndex++;
-                        mEditor.putInt("Index",pageIndex);
-                        mEditor.commit();
+//                        pageIndex++;
+//                        mEditor.putInt("Index",pageIndex);
+//                        mEditor.commit();
+                        for(int i = 1;i<=pageIndex;i++){
+                            getCon("1",String.valueOf(pageIndex),"10");
+
+                        }
                     }
                 },2000);
             }
@@ -90,9 +95,9 @@ public class MainActivity extends Activity {
                 mView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        pageIndex++;
                         mView.setLoadMoreComplete();
                         getCon("1",String.valueOf(pageIndex),"5");
-                        pageIndex++;
                         mEditor.putInt("Index",pageIndex);
                         mEditor.commit();
                     }
@@ -102,12 +107,19 @@ public class MainActivity extends Activity {
         });
         //主动触发下拉刷新操作
 //       mView.onRefresh();
-
       mEdit = (EditText) findViewById(R.id.main_edit);
         mEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent in = new Intent(MainActivity.this, Activity_Search.class);
+                startActivity(in);
+            }
+        });
+        mLogin = (TextView) findViewById(R.id.main_text_login);
+        mLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent in = new Intent(MainActivity.this, Activity_Login.class);
                 startActivity(in);
             }
         });
@@ -188,11 +200,13 @@ public class MainActivity extends Activity {
                             if (mList != null) {
                                mList.addAll(list);
                                 Log.i("success",mList.toString());
+                                mAdapter = new MyAdapter(MainActivity.this, mList);
+                                mView.setAdapter(mAdapter);
                             }
 
-                            if (mAdapter != null) {
-                                mAdapter.notifyDataSetChanged();
-                            }
+//                            if (mAdapter != null) {
+//                                mAdapter.notifyDataSetChanged();
+//                            }
 
                         } catch (ParserConfigurationException e) {
                             e.printStackTrace();

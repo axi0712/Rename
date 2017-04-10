@@ -2,20 +2,20 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="100dp">
-    <TextView
-        android:id="@+id/fra_soft_item_objid"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/colorAccent"
-        android:text="1" />
-    <TextView
-        android:id="@+id/fra_soft_item_type"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textColor="@color/colorAccent"
-        android:text="1" />
+    <!--<TextView-->
+        <!--android:id="@+id/fra_soft_item_objid"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/colorAccent"-->
+        <!--android:text="1" />-->
+    <!--<TextView-->
+        <!--android:id="@+id/fra_soft_item_type"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:gravity="center"-->
+        <!--android:textColor="@color/colorAccent"-->
+        <!--android:text="1" />-->
     <TextView
         android:id="@+id/fra_soft_item_title"
         android:layout_width="match_parent"

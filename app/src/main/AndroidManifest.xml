@@ -18,9 +18,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".parsing.Activity_WebView" />
-        <activity android:name=".Activity_Search" />
-        <activity android:name=".Activity_Search_Tab" />
-        <activity android:name=".TestActivity"></activity>
+        <activity android:name=".search.Activity_Search" />
+        <activity android:name=".search.Activity_Search_Tab" />
+        <activity android:name=".login.Activity_Login"></activity>
+
     </application>
 
 </manifest>

@@ -10,13 +10,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.androidkun.PullToRefreshRecyclerView;
 import com.androidkun.adapter.ViewHolder;
 import com.androidkun.callback.PullToRefreshListener;
-import com.example.administrator.opensourceinchina.Activity_Search_Tab;
 import com.example.administrator.opensourceinchina.R;
+import com.example.administrator.opensourceinchina.search.Activity_Search_Tab;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.InputSource;
@@ -53,28 +52,29 @@ public class Fragment_blog extends Fragment {
     private ArrayList<SoftWare> mList = new ArrayList<>();
     private MyAdapter mAdapter;
     private int pageIndex = 1;
-    private Button mBtn;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_software, null);
 
         initData();
-        return super.onCreateView(inflater, container, savedInstanceState);
+        return v;
     }
+
     private void initData() {
         mView = (PullToRefreshRecyclerView) v.findViewById(R.id.fra_soft_recyclerview);
         mShared = getActivity().getSharedPreferences("data", MODE_PRIVATE);
         mEditor = mShared.edit();
 //        pageIndex = mShared.getInt("Index", 1);
-        Log.i("","");
+        Log.e("kankanBlog",pageIndex+"");
         if(Activity_Search_Tab.str!=null){
-            getRetro("blog",Activity_Search_Tab.str, "3", "10");
+            getRetro("blog",Activity_Search_Tab.str,String.valueOf(pageIndex), "10");
         }
 
-        pageIndex++;
-        mEditor.putInt("Index", pageIndex);
-        mEditor.commit();
+//        pageIndex++;
+//        mEditor.putInt("Index", pageIndex);
+//        mEditor.commit();
         LinearLayoutManager layout = new LinearLayoutManager(getActivity().getApplicationContext());
         layout.setOrientation(LinearLayoutManager.VERTICAL);
 
@@ -91,12 +91,15 @@ public class Fragment_blog extends Fragment {
                     public void run() {
                         mView.setRefreshComplete();
                         mList.clear();
-                        if (Activity_Search_Tab.str != null) {
-                            getRetro("blog", Activity_Search_Tab.str, String.valueOf(pageIndex), "10");
+                        for(int i = 1;i<=pageIndex;i++){
+                            if (Activity_Search_Tab.str != null) {
+                                getRetro("blog", Activity_Search_Tab.str, String.valueOf(i), "10");
+                            }
                         }
-                        pageIndex++;
-                        mEditor.putInt("Index",pageIndex);
-                        mEditor.commit();
+
+
+//                        mEditor.putInt("Index",pageIndex);
+//                        mEditor.commit();
                     }
                 }, 2000);
             }
@@ -106,11 +109,12 @@ public class Fragment_blog extends Fragment {
                 mView.postDelayed(new Runnable() {
                     @Override
                     public void run() {
+                        pageIndex++;
                         mView.setLoadMoreComplete();
                         if (Activity_Search_Tab.str != null) {
-                            getRetro("blog", Activity_Search_Tab.str, String.valueOf(pageIndex), "5");
+                            getRetro("blog", Activity_Search_Tab.str, String.valueOf(pageIndex), "10");
                         }
-                        pageIndex++;
+
                         mEditor.putInt("Index",pageIndex);
                         mEditor.commit();
                     }
@@ -129,6 +133,7 @@ public class Fragment_blog extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         String str = response.body().string();
+                        Log.e("StrBlog",str+"");
                         StringReader reader = new StringReader(str);
                         InputSource is = new InputSource(reader);
                         SAXParserFactory sacF = SAXParserFactory.newInstance();
@@ -140,13 +145,15 @@ public class Fragment_blog extends Fragment {
                         ArrayList<SoftWare> list = han.getList();
                         if (mList != null) {
                             mList.addAll(list);
-                            Log.i("blog", mList.toString());
+                            Log.i("successBlog", list+"hheheda");
                             mAdapter = new MyAdapter(getActivity().getApplicationContext(), mList);
                             mView.setAdapter(mAdapter);
+
+                            Log.e("count",mAdapter.getItemCount()+"条");
                         }
-                        if (mAdapter != null) {
-                            mAdapter.notifyDataSetChanged();
-                        }
+//                        if (mAdapter != null) {
+//                            mAdapter.notifyDataSetChanged();
+//                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     } catch (ParserConfigurationException e) {
@@ -172,7 +179,7 @@ public class Fragment_blog extends Fragment {
         private ArrayList<SoftWare> getList() {
             return mList;
         }
-
+        //天假只是
         @Override
         public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException {
             super.startElement(uri, localName, qName, attributes);
@@ -221,8 +228,8 @@ public class Fragment_blog extends Fragment {
 
         @Override
         public void convert(ViewHolder holder, SoftWare softWare) {
-            holder.setText(R.id.fra_soft_item_objid, softWare.getObjid() + "");
-            holder.setText(R.id.fra_soft_item_type, softWare.getType() + "");
+//            holder.setText(R.id.fra_soft_item_objid, softWare.getObjid() + "");
+//            holder.setText(R.id.fra_soft_item_type, softWare.getType() + "");
             holder.setText(R.id.fra_soft_item_title, softWare.getTitle() + "");
             holder.setText(R.id.fra_soft_item_description, softWare.getDescription() + "");
             holder.setText(R.id.fra_soft_item_url, softWare.getUrl() + "");

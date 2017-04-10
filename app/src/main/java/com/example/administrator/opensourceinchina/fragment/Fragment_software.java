@@ -14,7 +14,7 @@ import android.view.ViewGroup;
 import com.androidkun.PullToRefreshRecyclerView;
 import com.androidkun.adapter.ViewHolder;
 import com.androidkun.callback.PullToRefreshListener;
-import com.example.administrator.opensourceinchina.Activity_Search_Tab;
+import com.example.administrator.opensourceinchina.search.Activity_Search_Tab;
 import com.example.administrator.opensourceinchina.R;
 
 import org.xml.sax.Attributes;
@@ -114,7 +114,6 @@ public class Fragment_software extends Fragment {
                         if (Activity_Search_Tab.str != null) {
                             getRetro("software", Activity_Search_Tab.str, String.valueOf(pageIndex), "10");
                         }
-
                         mEditor.putInt("Index",pageIndex);
                         mEditor.commit();
                     }
@@ -145,7 +144,7 @@ public class Fragment_software extends Fragment {
                         ArrayList<SoftWare> list = han.getList();
                         if (mList != null) {
                             mList.addAll(list);
-                            Log.i("success", mList.toString()+"hheheda");
+                            Log.i("success", list+"hheheda");
                             mAdapter = new MyAdapter(getActivity().getApplicationContext(), mList);
                             mView.setAdapter(mAdapter);
 
@@ -228,8 +227,8 @@ public class Fragment_software extends Fragment {
 
         @Override
         public void convert(ViewHolder holder, SoftWare softWare) {
-            holder.setText(R.id.fra_soft_item_objid, softWare.getObjid() + "");
-            holder.setText(R.id.fra_soft_item_type, softWare.getType() + "");
+//            holder.setText(R.id.fra_soft_item_objid, softWare.getObjid() + "");
+//            holder.setText(R.id.fra_soft_item_type, softWare.getType() + "");
             holder.setText(R.id.fra_soft_item_title, softWare.getTitle() + "");
             holder.setText(R.id.fra_soft_item_description, softWare.getDescription() + "");
             holder.setText(R.id.fra_soft_item_url, softWare.getUrl() + "");

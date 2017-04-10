@@ -1,4 +1,4 @@
-package com.example.administrator.opensourceinchina;
+package com.example.administrator.opensourceinchina.search;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

@@ -1,4 +1,4 @@
-package com.example.administrator.opensourceinchina;
+package com.example.administrator.opensourceinchina.search;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.widget.EditText;
 
-import com.example.administrator.opensourceinchina.fragment.Fragment_LookFor;
+import com.example.administrator.opensourceinchina.R;
 import com.example.administrator.opensourceinchina.fragment.Fragment_answer;
 import com.example.administrator.opensourceinchina.fragment.Fragment_blog;
 import com.example.administrator.opensourceinchina.fragment.Fragment_information;
@@ -38,18 +38,15 @@ public class Activity_Search_Tab extends FragmentActivity{
         Fragment_blog blog = new Fragment_blog();
         Fragment_information info = new Fragment_information();
         Fragment_answer answer = new Fragment_answer();
-        Fragment_LookFor look = new Fragment_LookFor();
         FraList.add(soft);
         FraList.add(blog);
         FraList.add(info);
         FraList.add(answer);
-        FraList.add(look);
         List<String> Strlist = new ArrayList<>();
         Strlist.add("软件");
         Strlist.add("博客");
         Strlist.add("资讯");
         Strlist.add("问答");
-        Strlist.add("找人");
         MyFragmentAdapter mAdapter = new MyFragmentAdapter(getSupportFragmentManager(),FraList,Strlist);
         mView.setAdapter(mAdapter);
         mView.setOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(mTab){

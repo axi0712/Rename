@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.administrator.opensourceinchina.Activity_Search">
+    tools:context="com.example.administrator.opensourceinchina.search.Activity_Search">
     <LinearLayout
         android:id="@+id/search_linea"
         android:layout_width="match_parent"
